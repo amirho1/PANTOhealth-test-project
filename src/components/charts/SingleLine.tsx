@@ -1,7 +1,8 @@
 import { line } from "d3";
 import Line, { type ComponentProps } from "./Line";
 import type { HTMLAttributes } from "react";
-import singleAdaptor from "../../libs/singleAdaptors";
+import singleAdaptor, { type SingleAdaptorReturns } from "../../libs/singleAdaptors";
+import type { singleData } from "../../types";
 
 function Chart({
   notNulls,
@@ -9,7 +10,7 @@ function Chart({
   x,
   y,
   ...props
-}: HTMLAttributes<SVGPathElement> & ComponentProps) {
+}: HTMLAttributes<SVGPathElement> & ComponentProps<singleData>) {
   const lineCb = line((_, i) => x(notNulls[i][0]), y);
   const path = lineCb(mappedY);
 
@@ -18,7 +19,7 @@ function Chart({
       <path
         fill="stroke"
         stroke="currentColor"
-        strokeWidth="1.5"
+        strokeWidth="1"
         d={path}
         color="white"
         {...props}
@@ -27,4 +28,7 @@ function Chart({
   );
 }
 
-export const SingleLine = Line(Chart, singleAdaptor);
+export const SingleLine = Line<HTMLAttributes<SVGPathElement>, SingleAdaptorReturns, singleData>(
+  Chart,
+  singleAdaptor
+);

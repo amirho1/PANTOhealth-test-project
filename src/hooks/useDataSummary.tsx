@@ -1,9 +1,7 @@
 import { useMemo } from "react";
-import type { Data } from "../types";
+import type { Data, multiData, singleData } from "../types";
 
 export type AlwaysReturns = {
-  notNulls: [number, number][];
-  mappedY: number[];
   xMin: number;
   xMax: number;
   yMin: number;
@@ -12,11 +10,10 @@ export type AlwaysReturns = {
 
 export type Adaptor<Returns extends Record<string, any>> = (arr: Data) => Returns & AlwaysReturns;
 
-export default function useDataSummary<Returns extends Record<string, any>>(
-  arr: Data,
-  adaptor: Adaptor<Returns>,
-  dependencies: any[] = []
-): AlwaysReturns {
+export default function useDataSummary<
+  Returns extends Record<string, any>,
+  ValueType extends singleData | multiData
+>(arr: Data<ValueType>, adaptor: Adaptor<Returns>, dependencies: any[] = []): AlwaysReturns {
   const result = useMemo(() => adaptor(arr), dependencies);
 
   return result;

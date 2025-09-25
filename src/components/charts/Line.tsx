@@ -14,18 +14,21 @@ interface LineProps<ValueType extends singleData | multiData> {
   title: string;
 }
 
-export interface ComponentProps {
+export interface ComponentProps<ValueType extends singleData | multiData> {
   x: ScaleLinear<number, number, never>;
   y: ScaleLinear<number, number, never>;
   mappedY: number[];
-  notNulls: [number, number][];
+  notNulls: [number, ValueType][];
 }
 
 export default function Line<
   PropsT extends Record<string, any>,
   AdaptorReturns extends Record<string, any>,
   ValueType extends singleData | multiData
->(Components: ComponentType<ComponentProps & PropsT & any>, adaptor: Adaptor<AdaptorReturns>) {
+>(
+  Component: ComponentType<ComponentProps<ValueType> & PropsT & any>,
+  adaptor: Adaptor<AdaptorReturns>
+) {
   return function EnhanceComp({
     data,
     width = 640,
@@ -40,11 +43,10 @@ export default function Line<
     const gx = useRef(null);
     const gy = useRef(null);
 
-    const { xMin, xMax, yMax, yMin, ...dataSummaryRest } = useDataSummary<AdaptorReturns>(
-      data,
-      adaptor,
-      [data]
-    );
+    const { xMin, xMax, yMax, yMin, ...dataSummaryRest } = useDataSummary<
+      AdaptorReturns,
+      ValueType
+    >(data, adaptor, [data]);
 
     const x = scaleLinear([xMin, xMax], [marginLeft, width - marginRight]);
 
@@ -59,7 +61,7 @@ export default function Line<
         <svg width={width} height={height}>
           <g ref={gx} transform={`translate(0,${height - marginBottom})`} />
           <g ref={gy} transform={`translate(${marginLeft},0)`} />
-          <Components x={x} y={y} {...dataSummaryRest} {...props} />
+          <Component x={x} y={y} {...dataSummaryRest} {...props} />
         </svg>
       </div>
     );

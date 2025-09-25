@@ -1,16 +1,13 @@
+import type { AlwaysReturns } from "../hooks/useDataSummary";
 import type { Data } from "../types";
 import { checkIsSingle } from "./helpers";
 
 export interface SingleAdaptorReturns {
   notNulls: [number, number][];
   mappedY: number[];
-  xMin: number;
-  xMax: number;
-  yMin: number;
-  yMax: number;
 }
 
-export default function singleAdaptor(arr: Data): SingleAdaptorReturns {
+export default function singleAdaptor(arr: Data): SingleAdaptorReturns & AlwaysReturns {
   const notNulls: [number, number][] = [];
   const mappedY: number[] = [];
   let xMin = 0,

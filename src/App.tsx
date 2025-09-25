@@ -10,10 +10,25 @@ function App() {
       return (
         <SingleLine key={index} title={chartData.title} data={chartData.data as Data<singleData>} />
       );
-    return <MultipleLine key={index} title={chartData.title} data={chartData.data as Data<multiData>} />;
+    return (
+      <MultipleLine key={index} title={chartData.title} data={chartData.data as Data<multiData>} />
+    );
   });
 
-  return <div>{charts}</div>;
+  return (
+    <div
+      style={{
+        display: "flex",
+        gap: "20px",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
+        flexWrap: "wrap",
+      }}
+    >
+      {charts}
+    </div>
+  );
 }
 
 export default App;

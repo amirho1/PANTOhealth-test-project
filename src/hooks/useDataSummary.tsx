@@ -1,31 +1,23 @@
 import { useMemo } from "react";
 import type { Data } from "../types";
-import { checkIsSingle } from "../libs/helpers";
 
-export default function useDataSummary(arr: Data, dependencies: any[] = []) {
-  const result = useMemo(() => {
-    const notNulls: [number, number][] = [];
-    const mappedY: number[] = [];
-    let xMin = 0,
-      xMax = 0,
-      yMin = 0,
-      yMax = 0;
+export type AlwaysReturns = {
+  notNulls: [number, number][];
+  mappedY: number[];
+  xMin: number;
+  xMax: number;
+  yMin: number;
+  yMax: number;
+};
 
-    for (let i = 0; i < arr.length; i++) {
-      const current = arr[i];
-      if (checkIsSingle(current)) {
-        notNulls.push(current);
-        mappedY.push(current[1]);
-        if (current[0] < xMin) xMin = current[0];
-        if (current[0] > xMax) xMax = current[0];
+export type Adaptor<Returns extends Record<string, any>> = (arr: Data) => Returns & AlwaysReturns;
 
-        if (current[1] < yMin) yMin = current[1];
-        if (current[1] > yMax) yMax = current[1];
-      }
-    }
-
-    return { notNulls, mappedY, xMin, xMax, yMin, yMax };
-  }, dependencies);
+export default function useDataSummary<Returns extends Record<string, any>>(
+  arr: Data,
+  adaptor: Adaptor<Returns>,
+  dependencies: any[] = []
+): AlwaysReturns {
+  const result = useMemo(() => adaptor(arr), dependencies);
 
   return result;
 }

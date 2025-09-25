@@ -10,21 +10,25 @@ export interface SingleAdaptorReturns {
 export default function singleAdaptor(arr: Data): SingleAdaptorReturns & AlwaysReturns {
   const notNulls: [number, number][] = [];
   const mappedY: number[] = [];
-  let xMin = 0,
-    xMax = 0,
-    yMin = 0,
-    yMax = 0;
+
+  let xMin = Infinity,
+    xMax = -Infinity,
+    yMin = Infinity,
+    yMax = -Infinity;
 
   for (let i = 0; i < arr.length; i++) {
     const current = arr[i];
     if (checkIsSingle(current)) {
-      notNulls.push(current);
-      mappedY.push(current[1]);
-      if (current[0] < xMin) xMin = current[0];
-      if (current[0] > xMax) xMax = current[0];
+      const xVal = current[0];
+      const yVal = current[1];
 
-      if (current[1] < yMin) yMin = current[1];
-      if (current[1] > yMax) yMax = current[1];
+      notNulls.push(current);
+      mappedY.push(yVal);
+      if (xVal < xMin) xMin = xVal;
+      if (xVal > xMax) xMax = xVal;
+
+      if (yVal < yMin) yMin = yVal;
+      if (yVal > yMax) yMax = yVal;
     }
   }
 

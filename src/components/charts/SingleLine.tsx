@@ -17,7 +17,7 @@ function Chart({
   return (
     path && (
       <path
-        fill="stroke"
+        fill="none"
         stroke="currentColor"
         strokeWidth="1"
         d={path}

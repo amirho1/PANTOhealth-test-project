@@ -26,7 +26,7 @@ function MultiPath({
       path && (
         <path
           key={i}
-          fill="stroke"
+          fill="none"
           stroke="currentColor"
           strokeWidth="1"
           d={path}

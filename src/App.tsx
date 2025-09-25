@@ -1,7 +1,8 @@
+import { MultipleLine } from "./components/charts/MultipleLine";
 import { SingleLine } from "./components/charts/SingleLine";
 import { checkIsSingle } from "./libs/helpers";
 import data from "./mocks/data.json";
-import type { Charts, Data, singleData } from "./types";
+import type { Charts, Data, multiData, singleData } from "./types";
 
 function App() {
   const charts = (data as Charts).map((chartData, index) => {
@@ -9,6 +10,7 @@ function App() {
       return (
         <SingleLine key={index} title={chartData.title} data={chartData.data as Data<singleData>} />
       );
+    return <MultipleLine key={index} title={chartData.title} data={chartData.data as Data<multiData>} />;
   });
 
   return <div>{charts}</div>;

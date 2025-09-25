@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import type { Data } from "../types";
 import { isPoint } from "../libs/helpers";
 
-export default function useDataSummary(arr: Data, dependencies = []) {
+export default function useDataSummary(arr: Data, dependencies: any[] = []) {
   const result = useMemo(() => {
     const notNulls: [number, number][] = [];
     const mappedY: number[] = [];

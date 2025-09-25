@@ -26,7 +26,7 @@ export default function SingleLineChart({
   const gx = useRef(null);
   const gy = useRef(null);
 
-  const { xMin, xMax, yMax, yMin, mappedY, notNulls } = useDataSummary(data);
+  const { xMin, xMax, yMax, yMin, mappedY, notNulls } = useDataSummary(data, [data]);
 
   const x = scaleLinear([xMin, xMax], [marginLeft, width - marginRight]);
 

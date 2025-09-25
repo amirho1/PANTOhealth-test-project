@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import type { Data } from "../types";
-import { isPoint } from "../libs/helpers";
+import { checkIsSingle } from "../libs/helpers";
 
 export default function useDataSummary(arr: Data, dependencies: any[] = []) {
   const result = useMemo(() => {
@@ -13,7 +13,7 @@ export default function useDataSummary(arr: Data, dependencies: any[] = []) {
 
     for (let i = 0; i < arr.length; i++) {
       const current = arr[i];
-      if (isPoint(current)) {
+      if (checkIsSingle(current)) {
         notNulls.push(current);
         mappedY.push(current[1]);
         if (current[0] < xMin) xMin = current[0];

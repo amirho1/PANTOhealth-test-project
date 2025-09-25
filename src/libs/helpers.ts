@@ -1,5 +1,5 @@
 
-export function isPoint(d: unknown): d is [number, number] {
+export function checkIsSingle(d: unknown): d is [number, number] {
   return (
     Array.isArray(d) &&
     d.length === 2 &&

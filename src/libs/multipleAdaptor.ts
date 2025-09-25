@@ -24,22 +24,18 @@ export default function multipleAdaptor(arr: Data): MultipleAdaptorReturns {
       const yArr = current[1];
       const xVal = current[0];
 
-      current[1].forEach((num, j) => {
-        if (num !== null && num !== undefined) {
+      yArr.forEach((num, j) => {
+        if (num !== null && num !== undefined && typeof num === "number" && isFinite(num)) {
           listOfMappedY[j].push(num);
           listOfMappedX[j].push(xVal);
+
+          yMin = Math.min(num, yMin);
+          yMax = Math.max(num, yMax);
         }
       });
 
       xMin = Math.min(xVal, xMin);
       xMax = Math.max(xVal, xMax);
-
-      yArr.forEach(num => {
-        if (num !== null && num !== undefined) {
-          yMin = Math.min(num, yMin);
-          yMax = Math.max(num, yMax);
-        }
-      });
     }
   }
 
